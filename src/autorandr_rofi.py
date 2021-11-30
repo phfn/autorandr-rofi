@@ -1,11 +1,12 @@
 "A Rofi script for autorandr"
 
-__version__ = "0.0.2"
+__version__ = "0.1.0"
 
 from rofi import Rofi
 import subprocess
+
 virtual_profiles = [
-        "--change",
+        "autochange",
         "common",
         "horizontal",
         "vertical",
@@ -23,18 +24,14 @@ def get_all_user_profiles():
 
 
 def main():
-    profiles = get_all_user_profiles()
-    profiles.extend(virtual_profiles)
-    rofi = Rofi()
-    index, _ = rofi.select("what profile?", profiles)
-    if index == -1:
+    profiles = virtual_profiles + get_all_user_profiles()
+    rofi = Rofi(matching="fuzzy", rofi_args=["-sort"])
+    profile = rofi.generic_entry("what profile?", options=profiles)
+    if not profile:
         return
-    print(index)
-    profile = profiles[index]
-    if profile == "--change":
+    if profile == "autochange":
         subprocess.call(['autorandr', '--change'])
-    else:
-        subprocess.call(['autorandr', '--load', profile.split(' ')[0]])
+    subprocess.call(['autorandr', '--load', profile.split(' ')[0]])
 
 
 if __name__ == "__main__":

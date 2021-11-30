@@ -8,7 +8,7 @@ authors = [{name = "Paul Hoffmann", email = "phfn@phfn.de"}]
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 dynamic = ["version", "description"]
 dependencies = [
-  'python-rofi == 1.0.1'
+  'python-rofi-phfn >= 1.0.3'
 ]
 [project.scripts]
 autorandr-rofi = "autorandr_rofi:main"
